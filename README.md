@@ -56,7 +56,7 @@ This is the implementation of the Automatic Neuron Discovery approach proposed i
 
 ### Running Algorithm One.
 ```
-torchrun --nproc_per_node 1 main.py --ckpt_dir <path_to_model> --tokenizer_path <path_to_model>/tokenizer.model --experiment algorithm_one --prompt <prompt_type_name> --data_dir <path_to_prompt_type_inference_results>
+torchrun --nproc_per_node 1 main.py --ckpt_dir <path_to_model> --tokenizer_path <path_to_model>/tokenizer.model --experiment algorithm_one --prompt <prompt_type_name> --data_dir <path_to_prompt_type_inference_results> --results_dir results/algorithm_one
 ```
 
 Note*: The `--data_dir` argument should point to the `--results_dir` argument while running `gsm8k_inference.py` (e.g., `results/gsm8k_inference/text_only/final.json`), as we are sampling only from examples where the model made correct predictions.
