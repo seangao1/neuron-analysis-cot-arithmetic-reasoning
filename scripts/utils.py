@@ -41,7 +41,13 @@ def read_file(file_path):
             raw_data.append(line.strip())
     return raw_data
 
-def load_model(ckpt_dir, tokenizer, max_seq_len: int = 128, max_batch_size: int = 4, model_parallel_size=None):
+
+def load_model(ckpt_dir, 
+               tokenizer, 
+               max_seq_len: int = 128, 
+               max_batch_size: int = 4, 
+               model_parallel_size=None):
+    
     if not torch.distributed.is_initialized():
         # torch.distributed.init_process_group("gloo")
         torch.distributed.init_process_group("nccl")
@@ -50,6 +56,7 @@ def load_model(ckpt_dir, tokenizer, max_seq_len: int = 128, max_batch_size: int 
         if model_parallel_size is None:
             model_parallel_size = int(os.environ.get("WORLD_SIZE", 1))
         initialize_model_parallel(model_parallel_size)
+        
     local_rank = int(os.environ.get("LOCAL_RANK", 0))
     torch.cuda.set_device(local_rank)
     # seed must be the same in all processes
